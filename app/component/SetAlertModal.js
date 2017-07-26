@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import {
     Modal,
     View,
@@ -6,18 +7,15 @@ import {
     TouchableHighlight
 } from 'react-native'
 
-export default class SetAlertModal extends Component {
+import { setModalVisible } from '../reducers/actions'
+
+class SetAlertModal extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            modalVisible: true
-        }
     }
 
-    setModalVisible = visible => {
-        this.setState({
-            modalVisible: visible
-        })
+    hideModal = () => {
+        store.dispatch(setModalVisible(false))
     }
 
     render() {
@@ -25,7 +23,7 @@ export default class SetAlertModal extends Component {
             <Modal
                 animationType={"slide"}
                 transparent={false}
-                visible={this.state.modalVisible}
+                visible={this.props.modal.modalVisible}
                 onRequestClose={() => {alert("Modal has been closed.")}}
             >
                 <View style={{marginTop: 22}}>
@@ -33,9 +31,7 @@ export default class SetAlertModal extends Component {
                         <Text>Hello World!</Text>
 
                         <TouchableHighlight
-                            onPress={() => {
-                                this.setModalVisible(!this.state.modalVisible)
-                            }}
+                            onPress={this.hideModal}
                         >
                             <Text>Hide Modal</Text>
                         </TouchableHighlight>
@@ -45,3 +41,10 @@ export default class SetAlertModal extends Component {
         )
     }
 }
+
+
+const mapStateToProps = state => {
+    return state
+}
+
+export default connect(mapStateToProps)(SetAlertModal)

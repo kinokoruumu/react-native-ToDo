@@ -10,6 +10,10 @@ import {
     TouchableHighlight
 } from 'react-native'
 
+import SetAlertModal from './SetAlertModal'
+
+import { setModalVisible } from '../reducers/actions'
+
 class TodoList extends Component {
     constructor(props) {
         super(props)
@@ -20,7 +24,7 @@ class TodoList extends Component {
     }
 
     openModal = () => {
-        console.log('openModal')
+        store.dispatch(setModalVisible(true))
     }
 
     render() {
@@ -33,15 +37,18 @@ class TodoList extends Component {
         )
 
         const rightButtons = [
-            <TouchableHighlight
-                style={styles.rightButtonContainer}
-                underlayColor='#555656'
-                onPress={this.openModal}
-            >
-                <Text style={styles.rightButtonText}>
-                    <Icon name="bell" size={30} color="#FFF"/>
-                </Text>
-            </TouchableHighlight>
+            <View style={{flex: 1}}>
+                <TouchableHighlight
+                    style={styles.rightButtonContainer}
+                    underlayColor='#555656'
+                    onPress={this.openModal}
+                >
+                    <Text style={styles.rightButtonText}>
+                        <Icon name="bell" size={30} color="#FFF"/>
+                    </Text>
+                </TouchableHighlight>
+                <SetAlertModal/>
+            </View>
         ]
         let render
         if (Object.keys(this.props.todos).length >= 1) {
