@@ -18,3 +18,10 @@ export const toComplete = id => {
         id
     }
 }
+
+export const setModalVisible = visible => {
+    return {
+        type: 'SET_MODAL_VISIBLE',
+        visible
+    }
+}
