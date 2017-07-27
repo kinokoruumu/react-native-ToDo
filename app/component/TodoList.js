@@ -27,12 +27,32 @@ class TodoList extends Component {
         store.dispatch(setModalVisible(true))
     }
 
+    onLeftActionActivate = () => {
+        this.setState({
+            leftActionActivated: true
+        })
+    }
+
+    onLeftActionDeactivate = () => {
+        this.setState({
+            leftActionActivated: false
+        })
+    }
+
+    onLeftActionComplete = () => {
+        this.setState({
+            toggle: !this.state.toggle
+        })
+    }
+
     render() {
         const { leftActionActivated, toggle } = this.state
 
+        console.log(this.state)
+
         const leftContent = (
-            <View style={[styles.leftSwipeItem, {backgroundColor: 'lightskyblue'}]}>
-                <Text>Pull action</Text>
+            <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? 'lightgoldenrodyellow' : 'steelblue'}]}>
+                { leftActionActivated ? <Text>release!</Text> : <Text>keep pulling!</Text> }
             </View>
         )
 
@@ -56,19 +76,21 @@ class TodoList extends Component {
                 return (
                     <Swipeable
                         key={i}
+                        leftActionActivationDistance={200}
                         leftContent={leftContent}
+                        onLeftActionActivate={this.onLeftActionActivate}
+                        onLeftActionDeactivate={this.onLeftActionDeactivate}
+                        onLeftActionComplete={this.onLeftActionComplete}
                         rightButtons={rightButtons}
                         rightButtonWidth={70}
                         rightActionActivationDistance={40}
-                        onLeftActionActivate={() => this.setState({leftActionActivated: true})}
-                        onLeftActionDeactivate={() => this.setState({leftActionActivated: false})}
-                        onLeftActionComplete={() => this.setState({toggle: !toggle})}
                     >
                         <ListItem
                             key={i}
                             centerElement={{
                                 primaryText: item.text
                             }}
+                            style={{backgroundColor: toggle ? 'thistle' : 'darkseagreen'}}
                         />
                     </Swipeable>
                 )
@@ -78,6 +100,17 @@ class TodoList extends Component {
         return (
             <View style={styles.container}>
                 {render}
+                <Swipeable
+                    leftActionActivationDistance={200}
+                    leftContent={leftContent}
+                    onLeftActionActivate={this.onLeftActionActivate}
+                    onLeftActionDeactivate={this.onLeftActionDeactivate}
+                    onLeftActionComplete={this.onLeftActionComplete}
+                >
+                    <View style={[styles.listItem, {backgroundColor: toggle ? 'thistle' : 'darkseagreen'}]}>
+                        <Text>Example 3</Text>
+                    </View>
+                </Swipeable>
             </View>
         )
     }

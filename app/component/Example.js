@@ -16,7 +16,7 @@ export default class Example extends Component {
   }
 
   render() {
-    const {leftActionActivated, toggle} = this.state;
+    const {leftActionActivated, toggle} = this.state
 
     return (
       <Swipeable
