@@ -7,7 +7,7 @@ const initialState = {
 export default function todo(state = initialState, action) {
     switch (action.type) {
         case 'ADD_TODO':
-            let data = {
+            return Object.assign({}, state, {
                 todos: [
                     ...state.todos,
                     {
@@ -15,13 +15,10 @@ export default function todo(state = initialState, action) {
                         completed: false
                     }
                 ]
-            }
-            let jsonData = JSON.stringify(data)
-            console.log('json'+jsonData)
-            AsyncStorage.setItem('todoItems', jsonData)
-            return Object.assign({}, state, data)
+            })
         case 'TO_COMPLETE':
-            return
+            console.log('id: '+action.id)
+            return state
         default:
             return state
     }

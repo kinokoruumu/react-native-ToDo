@@ -12,7 +12,7 @@ import {
 
 import SetAlertModal from './SetAlertModal'
 
-import { setModalVisible } from '../reducers/actions'
+import { setModalVisible, toComplete } from '../reducers/actions'
 
 class TodoList extends Component {
     constructor(props) {
@@ -34,6 +34,7 @@ class TodoList extends Component {
     }
 
     onLeftActionDeactivate = () => {
+        store.dispatch(toComplete('1'))
         this.setState({
             leftActionActivated: false
         })
@@ -69,9 +70,8 @@ class TodoList extends Component {
             </View>
         ]
         let render
-        console.log(this.props.hoge)
-        if (Object.keys(this.props.hoge).length >= 1) {
-            render = this.props.hoge.map(function(item, i){
+        if (Object.keys(this.props.todos).length >= 1) {
+            render = this.props.todos.map(function(item, i){
                 return (
                     <Swipeable
                         key={i}
@@ -142,15 +142,14 @@ const styles = StyleSheet.create({
 
 const getVisibleTodos = (todos, filter) => {
     switch (filter) {
-        case 'SHOW_ACTIVE':
-            return todos.filter((t) => !t.completed)
         case 'SHOW_COMPLETED':
             return todos.filter((t) => t.completed)
+        case 'SHOW_ACTIVE':
+            return todos.filter((t) => !t.completed)
     }
 }
 
 const mapStateToProps = (state) => {
-    console.log('state', state)
     return {
         todos: getVisibleTodos(state.todo.todos, state.visibilityFilter)
     }

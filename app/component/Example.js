@@ -6,6 +6,8 @@ import {
     Text,
 } from 'react-native'
 
+import { toComplete } from '../reducers/actions'
+
 export default class Example extends Component {
   constructor(props) {
     super(props)
@@ -13,6 +15,11 @@ export default class Example extends Component {
       leftActionActivated: false,
       toggle: false
     }
+  }
+
+  onLeftActionDeactivate = () => {
+    this.setState({leftActionActivated: true})
+    store.dispatch(toComplete('1'))
   }
 
   render() {
@@ -28,7 +35,7 @@ export default class Example extends Component {
               <Text>keep pulling!</Text>}
           </View>
         )}
-        onLeftActionActivate={() => this.setState({leftActionActivated: true})}
+        onLeftActionActivate={this.onLeftActionDeactivate}
         onLeftActionDeactivate={() => this.setState({leftActionActivated: false})}
         onLeftActionComplete={() => this.setState({toggle: !toggle})}
       >
