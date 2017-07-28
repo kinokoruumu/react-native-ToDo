@@ -1,10 +1,17 @@
 import React, { Component } from 'react'
+import {
+    View,
+    Text,
+    AsyncStorage
+} from 'react-native'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import reducer from '../reducers'
 import { COLOR, ThemeProvider } from 'react-native-material-ui';
 
 import TodoApp from './TodoApp'
+
+import { getTodo } from '../reducers/actions'
 
 store = createStore(reducer)
 
@@ -18,6 +25,7 @@ export default class App extends Component {
     constructor(props) {
         super(props)
     }
+
     render() {
         return (
             <Provider store={store}>

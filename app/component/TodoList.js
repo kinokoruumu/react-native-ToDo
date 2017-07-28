@@ -48,8 +48,6 @@ class TodoList extends Component {
     render() {
         const { leftActionActivated, toggle } = this.state
 
-        console.log(this.state)
-
         const leftContent = (
             <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? 'lightgoldenrodyellow' : 'steelblue'}]}>
                 { leftActionActivated ? <Text>release!</Text> : <Text>keep pulling!</Text> }
@@ -71,8 +69,9 @@ class TodoList extends Component {
             </View>
         ]
         let render
-        if (Object.keys(this.props.todos).length >= 1) {
-            render = this.props.todos.map(function(item, i){
+        console.log(this.props.hoge)
+        if (Object.keys(this.props.hoge).length >= 1) {
+            render = this.props.hoge.map(function(item, i){
                 return (
                     <Swipeable
                         key={i}
@@ -143,14 +142,15 @@ const styles = StyleSheet.create({
 
 const getVisibleTodos = (todos, filter) => {
     switch (filter) {
-        case 'SHOW_COMPLETED':
-            return todos.filter((t) => t.completed)
         case 'SHOW_ACTIVE':
             return todos.filter((t) => !t.completed)
+        case 'SHOW_COMPLETED':
+            return todos.filter((t) => t.completed)
     }
 }
 
 const mapStateToProps = (state) => {
+    console.log('state', state)
     return {
         todos: getVisibleTodos(state.todo.todos, state.visibilityFilter)
     }

@@ -1,8 +1,14 @@
 export const setVisibilityFilter = (filter) => {
-  return {
-    type: 'SET_VISIBILITY_FILTER',
-    filter
-  }
+    return {
+        type: 'SET_VISIBILITY_FILTER',
+        filter
+    }
+}
+
+export const getTodo = () => {
+    return {
+        type: 'GET_TODO'
+    }
 }
 
 export const addTodo = text => {
