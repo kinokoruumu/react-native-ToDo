@@ -11,14 +11,18 @@ export default function todo(state = initialState, action) {
                 todos: [
                     ...state.todos,
                     {
+                        id: action.id,
                         text: action.text,
                         completed: false
                     }
                 ]
             })
         case 'TO_COMPLETE':
-            console.log('id: '+action.id)
-            return state
+            let todos = state.todos
+            todos[action.id].completed = true
+            return Object.assign({}, state, {
+                todos: todos
+            })
         default:
             return state
     }

@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { ListItem } from 'react-native-material-ui';
-import Swipeable from 'react-native-swipeable';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {
     StyleSheet,
     View,
@@ -10,106 +7,24 @@ import {
     TouchableHighlight
 } from 'react-native'
 
-import SetAlertModal from './SetAlertModal'
-
-import { setModalVisible, toComplete } from '../reducers/actions'
+import List from './List'
 
 class TodoList extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            leftActionActivated: false,
-            toggle: false
-        }
-    }
-
-    openModal = () => {
-        store.dispatch(setModalVisible(true))
-    }
-
-    onLeftActionActivate = () => {
-        this.setState({
-            leftActionActivated: true
-        })
-    }
-
-    onLeftActionDeactivate = () => {
-        store.dispatch(toComplete('1'))
-        this.setState({
-            leftActionActivated: false
-        })
-    }
-
-    onLeftActionComplete = () => {
-        this.setState({
-            toggle: !this.state.toggle
-        })
     }
 
     render() {
-        const { leftActionActivated, toggle } = this.state
-
-        const leftContent = (
-            <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? 'lightgoldenrodyellow' : 'steelblue'}]}>
-                { leftActionActivated ? <Text>release!</Text> : <Text>keep pulling!</Text> }
-            </View>
-        )
-
-        const rightButtons = [
-            <View style={{flex: 1}}>
-                <TouchableHighlight
-                    style={styles.rightButtonContainer}
-                    underlayColor='#555656'
-                    onPress={this.openModal}
-                >
-                    <Text style={styles.rightButtonText}>
-                        <Icon name="bell" size={30} color="#FFF"/>
-                    </Text>
-                </TouchableHighlight>
-                <SetAlertModal/>
-            </View>
-        ]
         let render
         if (Object.keys(this.props.todos).length >= 1) {
             render = this.props.todos.map(function(item, i){
-                return (
-                    <Swipeable
-                        key={i}
-                        leftActionActivationDistance={200}
-                        leftContent={leftContent}
-                        onLeftActionActivate={this.onLeftActionActivate}
-                        onLeftActionDeactivate={this.onLeftActionDeactivate}
-                        onLeftActionComplete={this.onLeftActionComplete}
-                        rightButtons={rightButtons}
-                        rightButtonWidth={70}
-                        rightActionActivationDistance={40}
-                    >
-                        <ListItem
-                            key={i}
-                            centerElement={{
-                                primaryText: item.text
-                            }}
-                            style={{backgroundColor: toggle ? 'thistle' : 'darkseagreen'}}
-                        />
-                    </Swipeable>
-                )
+                return <List item={item} key={i}/>
             })
         }
 
         return (
             <View style={styles.container}>
                 {render}
-                <Swipeable
-                    leftActionActivationDistance={200}
-                    leftContent={leftContent}
-                    onLeftActionActivate={this.onLeftActionActivate}
-                    onLeftActionDeactivate={this.onLeftActionDeactivate}
-                    onLeftActionComplete={this.onLeftActionComplete}
-                >
-                    <View style={[styles.listItem, {backgroundColor: toggle ? 'thistle' : 'darkseagreen'}]}>
-                        <Text>Example 3</Text>
-                    </View>
-                </Swipeable>
             </View>
         )
     }
