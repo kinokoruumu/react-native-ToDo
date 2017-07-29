@@ -5,17 +5,19 @@ export const setVisibilityFilter = (filter) => {
     }
 }
 
-export const getTodo = () => {
+export const loadTodo = data => {
     return {
-        type: 'GET_TODO'
+        type: 'LOAD_TODO',
+        data
     }
 }
 
-let nextTodoId = 0;
-export const addTodo = text => {
+//TODO AsyncStorageにcurrentIDを保存してApp.jsのcomponentWillMountでnextTodoIdの初期値に代入する
+export const addTodo = (text, currentID) => {
+    currentID++
     return {
         type: 'ADD_TODO',
-        id: nextTodoId++,
+        id: currentID,
         text
     }
 }

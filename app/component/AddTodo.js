@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import {
     StyleSheet,
     View,
@@ -8,7 +9,7 @@ import {
 
 import { addTodo } from '../reducers/actions'
 
-export default class AddTodo extends Component {
+class AddTodo extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -17,8 +18,9 @@ export default class AddTodo extends Component {
     }
 
     onPress = () => {
+        console.log('props', this.props)
         if (this.state.text != '') {
-            store.dispatch(addTodo(this.state.text))
+            store.dispatch(addTodo(this.state.text, this.props.currentID))
         }
     }
 
@@ -66,3 +68,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#ED2B49',
     }
 })
+
+const mapStateToProps = (state) => {
+    console.log(state)
+    return {
+        currentID: state.todo.currentID
+    }
+}
+
+export default connect(mapStateToProps)(AddTodo)
