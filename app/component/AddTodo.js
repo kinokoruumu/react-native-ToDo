@@ -21,6 +21,7 @@ class AddTodo extends Component {
         console.log('props', this.props)
         if (this.state.text != '') {
             store.dispatch(addTodo(this.state.text, this.props.currentID))
+            this.state.text = ''
         }
     }
 
